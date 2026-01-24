@@ -16,7 +16,7 @@ export const AppRouter: React.FC = () => {
   const [currentPath, setCurrentPath] = useState(window.location.hash.slice(1) || '/');
   
   // Initialize authentication state - now safely handles store errors
-  const authState = useAuthInit();
+  useAuthInit();
 
   useEffect(() => {
     const handleHashChange = () => {
