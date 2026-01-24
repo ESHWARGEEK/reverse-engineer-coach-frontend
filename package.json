@@ -55,6 +55,10 @@
     "ajv-keywords": "^3.5.2",
     "schema-utils": "2.7.1",
     "terser-webpack-plugin": "4.2.3",
+    "react-scripts": {
+      "terser-webpack-plugin": "4.2.3",
+      "schema-utils": "2.7.1"
+    },
     "@tanstack/react-virtual": {
       "react": "18.3.1",
       "react-dom": "18.3.1"
