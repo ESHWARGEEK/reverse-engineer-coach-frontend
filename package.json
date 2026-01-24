@@ -23,7 +23,9 @@
     "react-resizable-panels": "^0.0.55",
     "react-router-dom": "^6.8.1",
     "react-scripts": "5.0.1",
+    "schema-utils": "2.7.1",
     "tailwindcss": "^3.3.6",
+    "terser-webpack-plugin": "4.2.3",
     "web-vitals": "^5.1.0",
     "zustand": "^4.4.7"
   },
@@ -86,7 +88,7 @@
     "test": "react-scripts test --watchAll=false",
     "test:watch": "react-scripts test",
     "eject": "react-scripts eject",
-    "postinstall": "npm ls ajv || npm install ajv@^6.12.6 && node -e \"try { const fs = require('fs'); const path = require('path'); const terserPath = path.join(__dirname, 'node_modules', 'terser-webpack-plugin', 'dist', 'index.js'); if (fs.existsSync(terserPath)) { let content = fs.readFileSync(terserPath, 'utf8'); content = content.replace('(0, _schemaUtils.validate)', '(_schemaUtils.validate || _schemaUtils.default)'); fs.writeFileSync(terserPath, content); } } catch(e) { console.log('Patch attempt failed:', e.message); }\""
+    "postinstall": "node -e \"try { const fs = require('fs'); const path = require('path'); const terserPath = path.join(__dirname, 'node_modules', 'terser-webpack-plugin', 'dist', 'index.js'); if (fs.existsSync(terserPath)) { let content = fs.readFileSync(terserPath, 'utf8'); if (content.includes('_schemaUtils.validate') && !content.includes('_schemaUtils.validate || _schemaUtils.default')) { content = content.replace(/\\(_schemaUtils\\.validate\\)/g, '(_schemaUtils.validate || _schemaUtils.default)'); fs.writeFileSync(terserPath, content); console.log('Patched terser-webpack-plugin'); } } const reactScriptsTerserPath = path.join(__dirname, 'node_modules', 'react-scripts', 'node_modules', 'terser-webpack-plugin', 'dist', 'index.js'); if (fs.existsSync(reactScriptsTerserPath)) { let content = fs.readFileSync(reactScriptsTerserPath, 'utf8'); if (content.includes('_schemaUtils.validate') && !content.includes('_schemaUtils.validate || _schemaUtils.default')) { content = content.replace(/\\(_schemaUtils\\.validate\\)/g, '(_schemaUtils.validate || _schemaUtils.default)'); fs.writeFileSync(reactScriptsTerserPath, content); console.log('Patched react-scripts terser-webpack-plugin'); } } } catch(e) { console.log('Patch completed with note:', e.message); }\""
   },
   "eslintConfig": {
     "extends": [
