@@ -62,23 +62,6 @@
       "schema-utils": "2.7.1",
       "react": "18.3.1",
       "react-dom": "18.3.1"
-    },
-    "@tanstack/react-virtual": {
-      "react": "18.3.1",
-      "react-dom": "18.3.1"
-    },
-    "react-router": {
-      "react": "18.3.1"
-    },
-    "react-router-dom": {
-      "react": "18.3.1",
-      "react-dom": "18.3.1"
-    },
-    "zustand": {
-      "react": "18.3.1"
-    },
-    "use-sync-external-store": {
-      "react": "18.3.1"
     }
   },
   "scripts": {
@@ -88,7 +71,7 @@
     "test": "react-scripts test --watchAll=false",
     "test:watch": "react-scripts test",
     "eject": "react-scripts eject",
-    "postinstall": "node -e \"try { const fs = require('fs'); const path = require('path'); const terserPath = path.join(__dirname, 'node_modules', 'terser-webpack-plugin', 'dist', 'index.js'); if (fs.existsSync(terserPath)) { let content = fs.readFileSync(terserPath, 'utf8'); if (content.includes('_schemaUtils.validate') && !content.includes('_schemaUtils.validate || _schemaUtils.default')) { content = content.replace(/\\(_schemaUtils\\.validate\\)/g, '(_schemaUtils.validate || _schemaUtils.default)'); fs.writeFileSync(terserPath, content); console.log('Patched terser-webpack-plugin'); } } const reactScriptsTerserPath = path.join(__dirname, 'node_modules', 'react-scripts', 'node_modules', 'terser-webpack-plugin', 'dist', 'index.js'); if (fs.existsSync(reactScriptsTerserPath)) { let content = fs.readFileSync(reactScriptsTerserPath, 'utf8'); if (content.includes('_schemaUtils.validate') && !content.includes('_schemaUtils.validate || _schemaUtils.default')) { content = content.replace(/\\(_schemaUtils\\.validate\\)/g, '(_schemaUtils.validate || _schemaUtils.default)'); fs.writeFileSync(reactScriptsTerserPath, content); console.log('Patched react-scripts terser-webpack-plugin'); } } } catch(e) { console.log('Patch completed with note:', e.message); }\""
+    "postinstall": "node -e \"try { const fs = require('fs'); const path = require('path'); console.log('Starting terser-webpack-plugin patch...'); const possiblePaths = [ path.join(__dirname, 'node_modules', 'terser-webpack-plugin', 'dist', 'index.js'), path.join(__dirname, 'node_modules', 'react-scripts', 'node_modules', 'terser-webpack-plugin', 'dist', 'index.js') ]; let patchCount = 0; possiblePaths.forEach(terserPath => { if (fs.existsSync(terserPath)) { console.log('Found terser file:', terserPath); let content = fs.readFileSync(terserPath, 'utf8'); const originalContent = content; content = content.replace(/\\(0, _schemaUtils\\.validate\\)/g, '(_schemaUtils.validate || _schemaUtils.default)'); if (content !== originalContent) { fs.writeFileSync(terserPath, content); console.log('Patched:', terserPath); patchCount++; } else { console.log('Already patched or no match:', terserPath); } } else { console.log('Not found:', terserPath); } }); console.log('Patch completed. Files patched:', patchCount); } catch(e) { console.log('Patch error:', e.message); }\""
   },
   "eslintConfig": {
     "extends": [
