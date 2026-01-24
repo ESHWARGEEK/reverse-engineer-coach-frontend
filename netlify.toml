@@ -4,7 +4,7 @@
 
 [build.environment]
   NODE_VERSION = "18"
-  NPM_VERSION = "9"
+  NPM_VERSION = "10"
   CI = "true"
   SKIP_PREFLIGHT_CHECK = "true"
   NPM_CONFIG_LEGACY_PEER_DEPS = "true"
