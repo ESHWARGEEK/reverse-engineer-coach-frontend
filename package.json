@@ -11,6 +11,7 @@
     "@types/node": "^20.10.0",
     "@types/react": "^18.2.42",
     "@types/react-dom": "^18.2.17",
+    "ajv": "^6.12.6",
     "autoprefixer": "^10.4.16",
     "axios": "^1.6.2",
     "clsx": "^2.0.0",
@@ -32,6 +33,8 @@
     "@types/react": "^18.2.42",
     "@types/react-dom": "^18.2.17",
     "ajv": "^6.12.6",
+    "ajv-keywords": "^3.5.2",
+    "schema-utils": "^3.3.0",
     "**/@tanstack/react-virtual/react": "18.3.1",
     "**/@tanstack/react-virtual/react-dom": "18.3.1",
     "**/react-router/react": "18.3.1",
@@ -48,6 +51,8 @@
     "@types/react": "^18.2.42",
     "@types/react-dom": "^18.2.17",
     "ajv": "^6.12.6",
+    "ajv-keywords": "^3.5.2",
+    "schema-utils": "^3.3.0",
     "@tanstack/react-virtual": {
       "react": "18.3.1",
       "react-dom": "18.3.1"
