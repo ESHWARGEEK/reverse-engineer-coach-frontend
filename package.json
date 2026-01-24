@@ -88,7 +88,7 @@
     "test": "react-scripts test --watchAll=false",
     "test:watch": "react-scripts test",
     "eject": "react-scripts eject",
-    "postinstall": "npm ls ajv || npm install ajv@^6.12.6"
+    "postinstall": "npm ls ajv || npm install ajv@^6.12.6 && node -e \"try { const fs = require('fs'); const path = require('path'); const terserPath = path.join(__dirname, 'node_modules', 'terser-webpack-plugin', 'dist', 'index.js'); if (fs.existsSync(terserPath)) { let content = fs.readFileSync(terserPath, 'utf8'); content = content.replace('(0, _schemaUtils.validate)', '(_schemaUtils.validate || _schemaUtils.default)'); fs.writeFileSync(terserPath, content); } } catch(e) { console.log('Patch attempt failed:', e.message); }\""
   },
   "eslintConfig": {
     "extends": [
