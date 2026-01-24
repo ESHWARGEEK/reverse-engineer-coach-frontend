@@ -52,7 +52,7 @@
     "@types/react-dom": "^18.2.17",
     "ajv": "^6.12.6",
     "ajv-keywords": "^3.5.2",
-    "schema-utils": "^3.3.0",
+    "schema-utils": "2.7.1",
     "@tanstack/react-virtual": {
       "react": "18.3.1",
       "react-dom": "18.3.1"
