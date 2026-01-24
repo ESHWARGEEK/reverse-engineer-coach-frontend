@@ -31,6 +31,7 @@
     "react-dom": "18.3.1",
     "@types/react": "^18.2.42",
     "@types/react-dom": "^18.2.17",
+    "ajv": "^6.12.6",
     "**/@tanstack/react-virtual/react": "18.3.1",
     "**/@tanstack/react-virtual/react-dom": "18.3.1",
     "**/react-router/react": "18.3.1",
@@ -46,6 +47,7 @@
     "react-dom": "18.3.1",
     "@types/react": "^18.2.42",
     "@types/react-dom": "^18.2.17",
+    "ajv": "^6.12.6",
     "@tanstack/react-virtual": {
       "react": "18.3.1",
       "react-dom": "18.3.1"
