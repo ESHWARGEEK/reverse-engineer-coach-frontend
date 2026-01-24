@@ -81,7 +81,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test --watchAll=false",
     "test:watch": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "postinstall": "npm ls ajv || npm install ajv@^6.12.6"
   },
   "eslintConfig": {
     "extends": [
