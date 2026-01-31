@@ -23,7 +23,7 @@ import {
   Play,
   Pause
 } from 'lucide-react';
-import { navigate } from './AppRouter';
+import { navigate } from '../utils/navigation';
 
 // Dashboard API types
 interface DashboardProject {
@@ -375,7 +375,7 @@ export const Dashboard: React.FC = () => {
   };
 
   const handleCreateProject = () => {
-    navigate('/');
+    navigate('/create-project');
   };
 
   const handleViewAllProjects = () => {

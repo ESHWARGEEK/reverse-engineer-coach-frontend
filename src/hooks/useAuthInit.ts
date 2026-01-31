@@ -6,19 +6,22 @@ import { useAuthStore } from '../store/authStore';
  * Safe version that handles store initialization errors
  */
 export const useAuthInit = () => {
+  // Always call the hook at the top level - never conditionally
+  const store = useAuthStore();
+
   useEffect(() => {
     // Delay the store access to ensure React is fully initialized
     const initializeAuth = () => {
       try {
-        const store = useAuthStore.getState();
+        const storeState = useAuthStore.getState();
         
-        if (store.isAuthenticated && store.checkTokenExpiration) {
+        if (storeState.isAuthenticated && storeState.checkTokenExpiration) {
           // Check token expiration on app load
-          store.checkTokenExpiration();
+          storeState.checkTokenExpiration();
           
           // Refresh user data to ensure it's up to date
-          if (store.refreshUser) {
-            store.refreshUser().catch(console.error);
+          if (storeState.refreshUser) {
+            storeState.refreshUser().catch(console.error);
           }
         }
       } catch (error) {
@@ -32,9 +35,9 @@ export const useAuthInit = () => {
     // Set up periodic token expiration checks
     const interval = setInterval(() => {
       try {
-        const store = useAuthStore.getState();
-        if (store.isAuthenticated && store.checkTokenExpiration) {
-          store.checkTokenExpiration();
+        const storeState = useAuthStore.getState();
+        if (storeState.isAuthenticated && storeState.checkTokenExpiration) {
+          storeState.checkTokenExpiration();
         }
       } catch (error) {
         console.error('Error during token expiration check:', error);
@@ -45,21 +48,10 @@ export const useAuthInit = () => {
   }, []);
 
   // Return store state safely
-  try {
-    const store = useAuthStore();
-    return {
-      isAuthenticated: store?.isAuthenticated || false,
-      user: store?.user || null,
-      isLoading: store?.isLoading || false,
-      error: store?.error || null
-    };
-  } catch (error) {
-    console.error('Error accessing auth store:', error);
-    return {
-      isAuthenticated: false,
-      user: null,
-      isLoading: false,
-      error: null
-    };
-  }
+  return {
+    isAuthenticated: store?.isAuthenticated || false,
+    user: store?.user || null,
+    isLoading: store?.isLoading || false,
+    error: store?.error || null
+  };
 };

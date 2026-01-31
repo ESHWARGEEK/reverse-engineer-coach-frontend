@@ -1,33 +1,33 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { AppRouter } from './components/AppRouter';
-import { ErrorBoundary } from './components/error/ErrorBoundary';
+import { SimpleErrorBoundary } from './components/error/SimpleErrorBoundary';
 import { ToastContainer } from './components/ui/Toast';
+import { useToastStore } from './store/toastStore';
 import { AppProvider } from './store/simpleStore';
-// Temporarily comment out the problematic store hook
-// import { useToastStore } from './store/toastStore';
-import { initializeErrorHandler } from './utils/errorHandler';
 
 function App() {
-  // Temporary simple state instead of store hook
-  const [toasts, setToasts] = useState<any[]>([]);
-  const removeToast = (id: string) => {
-    setToasts(prev => prev.filter(toast => toast.id !== id));
-  };
-
-  // Initialize error handler with toast integration
-  useEffect(() => {
-    initializeErrorHandler();
-  }, []);
+  const { toasts, removeToast } = useToastStore();
 
   return (
     <AppProvider>
       <div className="dark">
-        <ErrorBoundary componentName="App" enableRecovery={true}>
+        <SimpleErrorBoundary 
+          componentName="App" 
+          enableRecovery={true}
+          onError={(error, errorInfo) => {
+            console.error('Critical app error:', error, errorInfo);
+            // In case of critical error, try to preserve user session
+            const token = localStorage.getItem('auth_token');
+            if (token) {
+              console.log('Preserving user session during app recovery');
+            }
+          }}
+        >
           <AppRouter />
           
           {/* Global toast notifications */}
           <ToastContainer toasts={toasts} onDismiss={removeToast} />
-        </ErrorBoundary>
+        </SimpleErrorBoundary>
       </div>
     </AppProvider>
   );
