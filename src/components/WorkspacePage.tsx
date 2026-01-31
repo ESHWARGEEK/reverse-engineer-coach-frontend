@@ -62,6 +62,32 @@ export const WorkspacePage: React.FC = () => {
         }
         
         setCurrentProject(project);
+        
+        // Load enhanced workspace data if this is an enhanced project
+        try {
+          const { EnhancedWorkspaceIntegration } = await import('../services/EnhancedWorkspaceIntegration');
+          
+          if (EnhancedWorkspaceIntegration.isEnhancedProject(project)) {
+            const workspaceData = await EnhancedWorkspaceIntegration.loadWorkspaceData(projectId);
+            
+            if (workspaceData) {
+              // Initialize enhanced workspace features
+              console.log('Enhanced project detected, workspace data loaded:', workspaceData);
+              
+              // Store enhanced data in a way that components can access it
+              (window as any).enhancedWorkspaceData = workspaceData;
+              
+              // Initialize AI coach context if available
+              if (workspaceData.aiCoachContext) {
+                console.log('AI coach context available:', workspaceData.aiCoachContext);
+              }
+            }
+          }
+        } catch (enhancedError) {
+          console.warn('Failed to load enhanced workspace data:', enhancedError);
+          // Continue with standard workspace - enhanced features are optional
+        }
+        
       } catch (error: any) {
         const errorMessage = error.message || 'Failed to load project';
         setProjectError(errorMessage);

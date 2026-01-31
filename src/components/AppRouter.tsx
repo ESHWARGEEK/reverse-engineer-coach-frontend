@@ -9,9 +9,10 @@ import { SimpleProtectedRoute } from './auth/SimpleProtectedRoute';
 import { SimpleErrorBoundary } from './error/SimpleErrorBoundary';
 import { LearningResourcesPage } from './LearningResourcesPage';
 import { RepositoryDiscoveryPage } from './RepositoryDiscoveryPage';
-import { EnhancedProjectCreationWorkflow } from './EnhancedProjectCreationWorkflow';
+// import { EnhancedProjectCreationWorkflow } from './EnhancedProjectCreationWorkflow';
 import { useToast } from '../store/toastStore';
 import { navigate, getCurrentPath, getSearchParams } from '../utils/navigation';
+import { useAuthInit } from '../hooks/useAuthInit';
 
 /**
  * Enhanced error boundary handler for route components
@@ -40,6 +41,9 @@ export const AppRouter: React.FC = () => {
   const [currentPath, setCurrentPath] = useState(getCurrentPath());
   const [routeError, setRouteError] = useState<string | null>(null);
   const { showError, showWarning } = useToast();
+  
+  // Initialize authentication state - now safely handles store errors
+  useAuthInit();
 
   useEffect(() => {
     const handleHashChange = () => {
@@ -147,7 +151,17 @@ export const AppRouter: React.FC = () => {
         >
           <SimpleProtectedRoute>
             <SimpleLayout showNavigation={true}>
-              <EnhancedProjectCreationWorkflow />
+              {/* <EnhancedProjectCreationWorkflow /> */}
+              <div className="text-center text-white p-8">
+                <h2 className="text-2xl font-bold mb-4">Enhanced Workflow Temporarily Unavailable</h2>
+                <p className="text-gray-300 mb-4">This feature is being updated. Please use the regular project creation for now.</p>
+                <button 
+                  onClick={() => navigate('/dashboard')} 
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg"
+                >
+                  Go to Dashboard
+                </button>
+              </div>
             </SimpleLayout>
           </SimpleProtectedRoute>
         </SimpleErrorBoundary>
